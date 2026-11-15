@@ -1,6 +1,5 @@
 const Expense = require("../models/expenseModel");
 const crudFactory = require("../utils/crudFactory");
-
 const {
   getAll,
   getOne,
@@ -8,7 +7,6 @@ const {
   update,
   remove,
 } = crudFactory(Expense);
-
 module.exports = {
   getAllExpenses: getAll,
   getExpense: getOne,

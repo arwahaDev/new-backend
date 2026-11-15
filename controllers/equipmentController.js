@@ -1,6 +1,5 @@
 const Equipment = require("../models/equipmentModel");
 const crudFactory = require("../utils/crudFactory");
-
 const {
   getAll,
   getOne,
@@ -8,7 +7,6 @@ const {
   update,
   remove,
 } = crudFactory(Equipment);
-
 module.exports = {
   getAllEquipment: getAll,
   getEquipment: getOne,

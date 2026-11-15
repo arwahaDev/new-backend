@@ -10,6 +10,6 @@ const Crop = sequelize.define("Crop", {
  status: { type: DataTypes.ENUM("Healthy", "Needs Attention", "Critical"), defaultValue: "Healthy" },
  expectedQty: { type: DataTypes.DECIMAL(12, 2), defaultValue: 0 },
  harvestQty: { type: DataTypes.DECIMAL(12, 2), defaultValue: 0 },
- createdBy: { type: DataTypes.UUID },
+ createdBy: { type: DataTypes.INTEGER },
 }, { tableName: "crops", timestamps: true });
 module.exports = Crop;

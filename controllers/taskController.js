@@ -1,6 +1,5 @@
 const Task = require("../models/taskModel");
 const crudFactory = require("../utils/crudFactory");
-
 const {
   getAll,
   getOne,
@@ -8,7 +7,6 @@ const {
   update,
   remove,
 } = crudFactory(Task);
-
 module.exports = {
   getAllTasks: getAll,
   getTask: getOne,

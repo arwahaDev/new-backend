@@ -1,6 +1,5 @@
 const Attendance = require("../models/attendanceModel");
 const crudFactory = require("../utils/crudFactory");
-
 const {
   getAll,
   getOne,
@@ -8,7 +7,6 @@ const {
   update,
   remove,
 } = crudFactory(Attendance);
-
 module.exports = {
   getAllAttendance: getAll,
   getAttendance: getOne,

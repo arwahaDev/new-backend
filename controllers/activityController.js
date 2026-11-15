@@ -1,13 +1,11 @@
 const Activity = require("../models/activityModel");
 const { ok } = require("../utils/response");
-
 // Get All Activities
 const getAllActivities = async (req, res, next) => {
   try {
     const activities = await Activity.findAll({
       order: [["timestamp", "DESC"]],
     });
-
     return ok(
       res,
       "Activity records fetched successfully.",
@@ -17,12 +15,10 @@ const getAllActivities = async (req, res, next) => {
     next(error);
   }
 };
-
 // Get Single Activity
 const getActivity = async (req, res, next) => {
   try {
     const activity = await Activity.findByPk(req.params.id);
-
     if (!activity) {
       return res.status(404).json({
         success: false,
@@ -30,7 +26,6 @@ const getActivity = async (req, res, next) => {
         data: null,
       });
     }
-
     return ok(
       res,
       "Activity record fetched successfully.",
@@ -40,7 +35,6 @@ const getActivity = async (req, res, next) => {
     next(error);
   }
 };
-
 module.exports = {
   getAllActivities,
   getActivity,

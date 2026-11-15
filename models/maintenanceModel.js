@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
-
 const Maintenance = sequelize.define(
   "Maintenance",
   {
@@ -9,27 +8,22 @@ const Maintenance = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-
     equipmentId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-
     date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-
     cost: {
       type: DataTypes.DECIMAL(12, 2),
       allowNull: false,
     },
-
     performedBy: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -40,5 +34,4 @@ const Maintenance = sequelize.define(
     timestamps: true,
   }
 );
-
 module.exports = Maintenance;

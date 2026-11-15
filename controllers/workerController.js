@@ -1,6 +1,5 @@
 const Worker = require("../models/workerModel");
 const crudFactory = require("../utils/crudFactory");
-
 const {
   getAll,
   getOne,
@@ -8,7 +7,6 @@ const {
   update,
   remove,
 } = crudFactory(Worker);
-
 module.exports = {
   getAllWorkers: getAll,
   getWorker: getOne,

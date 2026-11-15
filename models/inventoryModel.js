@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
-
 const Inventory = sequelize.define(
   "Inventory",
   {
@@ -9,12 +8,10 @@ const Inventory = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-
     item: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-
     type: {
       type: DataTypes.ENUM(
         "Fertilizer",
@@ -23,19 +20,16 @@ const Inventory = sequelize.define(
       ),
       allowNull: false,
     },
-
     qty: {
       type: DataTypes.DECIMAL(12, 2),
       allowNull: false,
       defaultValue: 0,
     },
-
     minQty: {
       type: DataTypes.DECIMAL(12, 2),
       allowNull: false,
       defaultValue: 0,
     },
-
     unit: {
       type: DataTypes.STRING(30),
       allowNull: false,
@@ -46,5 +40,4 @@ const Inventory = sequelize.define(
     timestamps: true,
   }
 );
-
 module.exports = Inventory;

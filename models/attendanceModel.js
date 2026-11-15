@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
-
 const Attendance = sequelize.define(
   "Attendance",
   {
@@ -9,17 +8,14 @@ const Attendance = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-
     workerId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-
     date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-
     status: {
       type: DataTypes.ENUM(
         "Present",
@@ -29,7 +25,6 @@ const Attendance = sequelize.define(
       ),
       allowNull: false,
     },
-
     note: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -46,5 +41,4 @@ const Attendance = sequelize.define(
     ],
   }
 );
-
 module.exports = Attendance;

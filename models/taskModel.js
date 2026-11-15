@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
-
 const Task = sequelize.define(
   "Task",
   {
@@ -9,12 +8,10 @@ const Task = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-
     title: {
       type: DataTypes.STRING(150),
       allowNull: false,
     },
-
     type: {
       type: DataTypes.ENUM(
         "Irrigation",
@@ -24,17 +21,14 @@ const Task = sequelize.define(
       ),
       allowNull: false,
     },
-
     cropId: {
       type: DataTypes.UUID,
       allowNull: true,
     },
-
     dueDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-
     status: {
       type: DataTypes.ENUM("Pending", "Done", "Overdue"),
       defaultValue: "Pending",
@@ -45,5 +39,4 @@ const Task = sequelize.define(
     timestamps: true,
   }
 );
-
 module.exports = Task;

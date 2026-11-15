@@ -21,8 +21,8 @@ const protect = async (req, res, next) => {
     }
 
     req.user = user;
-
     next();
+
   } catch (error) {
     return fail(res, "Not authorized. Invalid or expired token.", 401);
   }
@@ -30,7 +30,7 @@ const protect = async (req, res, next) => {
 
 const authorize = (...roles) => {
   return (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.role)) {
+    if (!req.user || !roles.includes(req.user.userType)) {
       return fail(res, "You do not have permission.", 403);
     }
 

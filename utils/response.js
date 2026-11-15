@@ -5,7 +5,6 @@ const ok = (res, message, data = null, statusCode = 200) => {
     data,
   });
 };
-
 const fail = (res, message, statusCode = 400) => {
   return res.status(statusCode).json({
     success: false,
@@ -13,5 +12,4 @@ const fail = (res, message, statusCode = 400) => {
     data: null,
   });
 };
-
 module.exports = { ok, fail };
