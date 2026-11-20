@@ -11,7 +11,6 @@ const protect = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findByPk(decoded.id);
@@ -21,16 +20,24 @@ const protect = async (req, res, next) => {
     }
 
     req.user = user;
-    next();
+    console.log("AUTH USER ID:", req.user.id);
+    console.log("AUTH USER ROLE:", req.user.userType);
 
+    next();
   } catch (error) {
+    console.error("AUTH ERROR:", error.message);
     return fail(res, "Not authorized. Invalid or expired token.", 401);
   }
 };
 
 const authorize = (...roles) => {
   return (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.userType)) {
+    const userRole = req.user?.userType;
+
+    console.log("USER ROLE:", userRole);
+    console.log("ALLOWED ROLES:", roles);
+
+    if (!userRole || !roles.includes(userRole)) {
       return fail(res, "You do not have permission.", 403);
     }
 

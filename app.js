@@ -13,7 +13,7 @@ const {
   errorHandler,
 } = require("./middleware/errorMiddleware");
 // Create Express App
-const app = express();
+const app = express();   //express application ka instance create 
 // Global Middleware
 app.use(helmet());
 app.use(cors());
@@ -47,13 +47,13 @@ const maintenanceRoutes = require("./routes/maintenanceRoutes");
 const activityRoutes = require("./routes/activityRoutes");
 // Register Routes
 app.use("/api/users", userRoutes);
-app.use("/api/crop", cropRoutes);
+app.use("/api/crops", cropRoutes);
 app.use("/api/order", orderRoutes);
-app.use("/api/buyer", buyerRoutes);
+app.use("/api/buyers", buyerRoutes);
 app.use("/api/tasks", taskRoutes);
-app.use("/api/expense", expenseRoutes);
+app.use("/api/expenses", expenseRoutes);
 app.use("/api/inventory", inventoryRoutes);
-app.use("/api/worker", workerRoutes);
+app.use("/api/workers", workerRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/equipment", equipmentRoutes);
 app.use("/api/maintenance", maintenanceRoutes);

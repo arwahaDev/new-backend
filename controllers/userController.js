@@ -21,7 +21,23 @@ const validateInputLengths = (name, email) => {
 
   return errors;
 };
+   // GET PENDING REGISTRATION REQUESTS
+const getPendingUsers = asyncHandler(async (req, res) => {
+  const users = await User.findAll({
+    where: {
+      status: 'inactive',
+      userType:{[Op.in]:['employee','teamlead']}
+    },
+    attributes: { exclude: ['password'] },
+    order: [['id', 'DESC']]
+  });
 
+  return res.status(200).json({
+    data: { users },
+    succeeded: true,
+    message: "Pending users retrieved successfully"
+  });
+});
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
 
@@ -70,7 +86,8 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findOne({ where: { email } });
-
+  console.log("DATABASE USER TYPE: ",user?.userType);
+  console.log("DATABASE USER NAME:",user?.name);
   if (!user) {
     return res.status(400).json({
       message: 'Invalid email or password'
@@ -78,7 +95,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
-
+  console.log("Password Match:",isMatch);
   if (!isMatch) {
     return res.status(400).json({
       message: 'Invalid email or password'
@@ -121,18 +138,17 @@ const loginUser = asyncHandler(async (req, res) => {
 const createUser = asyncHandler(async (req, res) => {
   try {
     const {
-      name, email, avatar, userType,
+      name, email, password, avatar, userType,
       cnic, cnic_front, cnic_back, phone, joiningDate,
       terminatedDate, status, isTeamLead, isTerminated, teamLeadId
     } = req.body;
 
-    if (!name || !email || !userType || !cnic || !joiningDate || !status) {
+    if (!name || !email || !password || !userType || !cnic || !joiningDate || !status) {
       return res.status(400).json({
         message: "Please fill all required fields"
       });
     }
 
-    const password = 'check_in_123';
 
     const existingUser = await User.findOne({ where: { email } });
 
@@ -150,14 +166,17 @@ const createUser = asyncHandler(async (req, res) => {
       });
     }
 
-    const existingPhone = await User.findOne({ where: { phone } });
-
-    if (existingPhone) {
-      return res.status(400).json({
-        message: "Phone already exists"
+    if (phone) {
+     const existingPhone = await User.findOne({
+       where: { phone }
       });
-    }
-
+     if (existingPhone) {
+    return res.status(400).json({
+      message: "Phone already exists"
+    });
+  }
+}
+    console.log("Received Password:",password?"YES":"NO");
     const newUser = await User.create({
       name, email, avatar, userType,
       cnic, cnic_front, cnic_back, phone,
@@ -165,7 +184,7 @@ const createUser = asyncHandler(async (req, res) => {
       joiningDate, terminatedDate, status,
       isTeamLead, isTerminated, teamLeadId
     });
-
+     console.log("Password Hashed.",newUser.password!==password);
     if (newUser) {
       const { password: _, ...userWithoutPassword } = newUser.toJSON();
 
@@ -373,14 +392,14 @@ const logoutUser = (req, res) => {
 // UPDATE USER
 const updateUser = asyncHandler(async (req, res) => {
   try {
-    const {
-      teamLeadId, id, name, email, password, avatar, userType,
+         const {
+      teamLeadId, name, email, password, avatar, userType,
       cnic, cnic_front, cnic_back, phone, joiningDate,
       terminatedDate, status, isTeamLead, isTerminated
-    } = req.body;
+} = req.body;
 
-    const user = await User.findByPk(id);
-
+const id = req.params.id;
+const user = await User.findByPk(id);
     if (!user) {
       return res.status(404).json({
         message: "User not found"
@@ -530,6 +549,7 @@ module.exports = {
   createUser,
   registerUser,
   getAllUsers,
+  getPendingUsers,
   loginUser,
   logoutUser,
   updateUser,
